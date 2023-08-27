@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>inlong.tubemq.ctl</groupId>
+  <artifactId>tubemq-ctl</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>tubemq-ctl</name>
+  <url>http://maven.apache.org</url>
+
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>appassembler-maven-plugin</artifactId>
+            <version>2.1.0</version>
+            <executions>
+                <execution>
+                    <id>make-assembly</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>assemble</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <repositoryLayout>flat</repositoryLayout>
+                <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
+                <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+                <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                <assembleDirectory>${project.build.directory}/client</assembleDirectory>
+                <configurationDirectory>conf</configurationDirectory>
+                <repositoryName>lib</repositoryName>
+                <binFolder>bin</binFolder>
+                <platforms>
+                    <platform>windows</platform>
+                    <platform>unix</platform>
+                </platforms>
+                <binFileExtensions>
+                    <unix>.sh</unix>
+                    <windows>.bat</windows>
+                </binFileExtensions>
+                <encoding>UTF-8</encoding>
+                <logsDirectory>logs</logsDirectory>
+                <tempDirectory>tmp</tempDirectory>
+                <extraJvmArguments>-Xms128m</extraJvmArguments>
+                <programs>
+                    <program>
+                        <mainClass>inlong.tubemq.ctl.App</mainClass>
+                        <name>tubemq-ctl</name>
+                    </program>
+                </programs>
+            </configuration>
+        </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>args4j</groupId>
+      <artifactId>args4j</artifactId>
+      <version>2.33</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.14</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.10.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.inlong</groupId>
+        <artifactId>tubemq-client</artifactId>
+        <version>1.4.0</version>
+    </dependency>
+  </dependencies>
+</project>
+
+<!-- 
+  127.0.0.1:8715
+  mvn exec:java -Dexec.mainClass="inlong.tubemq.ctl.App" -Dexec.args="topic create -r 2 -o ww" 
+-->
