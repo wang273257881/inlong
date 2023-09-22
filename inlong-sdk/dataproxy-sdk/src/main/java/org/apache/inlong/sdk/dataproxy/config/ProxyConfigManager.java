@@ -346,7 +346,7 @@ public class ProxyConfigManager extends Thread {
                     newProxyInfoList.clear();
                     LOGGER.info("proxy IP list doesn't change, load {}", proxyEntry.getLoad());
                 }
-                if (clientConfig.getLoadBalance() == LoadBalance.CONSISTENCY_HASH) {
+                if (clientConfig.getLoadBalance() == LoadBalance.CONSISTENCY_HASH || clientConfig.getLoadBalance() == LoadBalance.GROUP_CONSISTENCY_HASH) {
                     updateHashRing(proxyInfoList);
                 }
             } else {
